@@ -1,38 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
+import mapboxgl, { Popup } from 'mapbox-gl';
 import { states } from '../States/states';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { Tooltip } from '@mui/material';
 
-const mapdata = [{
-    "id" : "0400000US04",
-    "name" : "Arizona",
-    "CENSUSAREA": 50645.326000,
-    "geometry":[
-        [
-            [-67.13734, 45.13745],
-            [-66.96466, 44.8097],
-            [-68.03252, 44.3252],
-            [-69.06, 43.98],
-            [-70.11617, 43.68405],
-            [-70.64573, 43.09008],
-            [-70.75102, 43.08003],
-            [-70.79761, 43.21973],
-            [-70.98176, 43.36789],
-            [-70.94416, 43.46633],
-            [-71.08482, 45.30524],
-            [-70.66002, 45.46022],
-            [-70.30495, 45.91479],
-            [-70.00014, 46.69317],
-            [-69.23708, 47.44777],
-            [-68.90478, 47.18479],
-            [-68.2343, 47.35462],
-            [-67.79035, 47.06624],
-            [-67.79141, 45.70258],
-            [-67.13734, 45.13745]
-        ]
-    ]
-}];
 
 const Dashboard = () => {
     const mapContainerRef = useRef();
@@ -54,52 +26,37 @@ const Dashboard = () => {
 
         const getcorrds = states.map(data=> data.geometry);
 
-        console.log(getcorrds);
+        // console.log(getcorrds);
 
         mapRef.current.on('load', () => {
             
             states.forEach((data,key)=>{
            
 
-            mapRef.current.addSource('maine'+key, {
+            mapRef.current.addSource('state'+key, {
               type: 'geojson',
               data: {
                 type: 'Feature',
                 geometry: {
                   type: 'Polygon',
-                  // These coordinates outline Maine.
+                  // These coordinates outline state.
                   coordinates: data.geometry
-                //   coordinates: [
-                //     [
-                //       [-67.13734, 45.13745],
-                //       [-66.96466, 44.8097],
-                //       [-68.03252, 44.3252],
-                //       [-69.06, 43.98],
-                //       [-70.11617, 43.68405],
-                //       [-70.64573, 43.09008],
-                //       [-70.75102, 43.08003],
-                //       [-70.79761, 43.21973],
-                //       [-70.98176, 43.36789],
-                //       [-70.94416, 43.46633],
-                //       [-71.08482, 45.30524],
-                //       [-70.66002, 45.46022],
-                //       [-70.30495, 45.91479],
-                //       [-70.00014, 46.69317],
-                //       [-69.23708, 47.44777],
-                //       [-68.90478, 47.18479],
-                //       [-68.2343, 47.35462],
-                //       [-67.79035, 47.06624],
-                //       [-67.79141, 45.70258],
-                //       [-67.13734, 45.13745]
-                //     ]
-                //   ]
-                }
+                },
+                properties: {
+                    description:
+                    `<h2> ${data?.description?.name}</h2>
+                    <p>Capital: ${data?.description?.capital} </p>
+                    <p>Population: ${data?.description?.population} <p>
+                    <p>Length: ${data?.description?.dimensions?.length} </p>
+                    <p>Width: ${data?.description?.dimensions?.width} </p>
+                    `
+                  },
               }
             });
             mapRef.current.addLayer({
-                id: 'maine'+key,
+                id: 'state'+key,
                 type: 'fill',
-                source: 'maine'+key,
+                source: 'state'+key,
                 layout: {},
                 paint: {
                     'fill-color': '#0080ff',
@@ -109,7 +66,7 @@ const Dashboard = () => {
             mapRef.current.addLayer({
                 id: 'outline'+key,
                 type: 'line',
-                source: 'maine'+key,
+                source: 'state'+key,
                 layout: {},
                 paint: {
                     'line-color': '#000',
@@ -117,9 +74,39 @@ const Dashboard = () => {
                 }
             });
 
+
+      const popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+      });
+            mapRef.current.on('mouseenter','state'+key, (e)=>{
+                // console.log(e);
+                // console.log(mapRef.current.getCanvas());
+                const coordinates = e.features[0].geometry.coordinates.slice();
+                const description = e.features[0].properties.description;
+        
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                  coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+                // console.log(coordinates[0]);
+        
+                popup.setLngLat(e?.lngLat).setHTML(description).setMaxWidth('200px') .addTo(mapRef.current);
             });
 
+
+      mapRef.current.on('mouseleave', 'state'+key, () => {
+        mapRef.current.getCanvas().style.cursor = '';
+        popup.remove();
+      });
+
+            
+
+            }); // loop ends
+
         });
+
+        
 
 
     }, []);
@@ -133,6 +120,7 @@ const Dashboard = () => {
                     width: '100%',
                     height: '100%',
                 }} />
+              
         </>
     )
 };

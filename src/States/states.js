@@ -3,6 +3,15 @@ let states = [
         "id" : "0400000US04",
         "name" : "Arizona",
         "CENSUSAREA": 50645.326000,
+        "description": {
+            name:"Arizon",
+            capital: "Phoenix",
+            dimensions:{
+                length: '400mi',
+                width: '310mi'
+            },
+            population: '7,151,502',
+        },
         "geometry": [
                     [
                         [
@@ -3927,6 +3936,15 @@ let states = [
     {
         "id" : "0400000US09",
         "name" : "Connecticut",
+        "description": {
+            name:"Connecticut",
+            capital: "Hartford",
+            dimensions:{
+                length: '70mi',
+                width: '110mi'
+            },
+            population: '3,605,944',
+        },
         "CENSUSAREA": 4842.355000,
         "geometry": [
                     [
@@ -5381,6 +5399,15 @@ let states = [
         "id" : "0400000US08",
         "name" : "Colorado",
         "CENSUSAREA": 103641.888000,
+        "description": {
+            name:"Colorado",
+            capital: "Denver",
+            dimensions:{
+                length: '280mi',
+                width: '3800mi'
+            },
+            population: '5,877,610',
+        },
         "geometry" : [
                     [
                         [
