@@ -6,15 +6,19 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { Tooltip } from '@mui/material';
 
 
-const Dashboard = () => {
+const Dashboard = ({visibility, slider, state}) => {
     const mapContainerRef = useRef();
     const mapRef = useRef();
     const [lng, setLng] = useState(-90.9);
     const [lat, setLat] = useState(34.35);
     const [zoom, setZoom] = useState(4);
+    const [mapLoaded, setMapLoaded] = useState(false);
+
 
     useEffect(() => {
         // mapboxgl.accessToken = `${process.env.REACT_APP_ACCESS_TOKEN_PUBLIC}`;
+       console.log('my visi',visibility);
+       
         mapboxgl.accessToken = 'pk.eyJ1IjoiYWRpdHlhMTcyOHJhbmEiLCJhIjoiY2trMjBrYmFoMHd4cjJwcnUzdDJqamVtYiJ9.Lj7AXin1doWxeTUKtmXXmg';
         if (mapRef.current) return; // initialize map only once
         mapRef.current = new mapboxgl.Map({
@@ -29,11 +33,11 @@ const Dashboard = () => {
         // console.log(getcorrds);
 
         mapRef.current.on('load', () => {
-            
+            setMapLoaded(true);
             states.forEach((data,key)=>{
            
 
-            mapRef.current.addSource('state'+key, {
+            mapRef.current.addSource(data?.name, {
               type: 'geojson',
               data: {
                 type: 'Feature',
@@ -49,14 +53,15 @@ const Dashboard = () => {
                     <p>Population: ${data?.description?.population} <p>
                     <p>Length: ${data?.description?.dimensions?.length} </p>
                     <p>Width: ${data?.description?.dimensions?.width} </p>
+                    <p>${visibility} </p>
                     `
                   },
               }
             });
             mapRef.current.addLayer({
-                id: 'state'+key,
-                type: 'fill',
-                source: 'state'+key,
+                id: data?.name,
+                type: visibility == 'none' ? 'none' : 'fill',
+                source: data?.name,
                 layout: {},
                 paint: {
                     'fill-color': '#0080ff',
@@ -66,11 +71,11 @@ const Dashboard = () => {
             mapRef.current.addLayer({
                 id: 'outline'+key,
                 type: 'line',
-                source: 'state'+key,
+                source: data?.name,
                 layout: {},
                 paint: {
                     'line-color': '#000',
-                    'line-width': 3
+                    'line-width': 2
                 }
             });
 
@@ -79,7 +84,7 @@ const Dashboard = () => {
         closeButton: false,
         closeOnClick: false
       });
-            mapRef.current.on('mouseenter','state'+key, (e)=>{
+            mapRef.current.on('mouseenter',data?.name, (e)=>{
                 // console.log(e);
                 // console.log(mapRef.current.getCanvas());
                 const coordinates = e.features[0].geometry.coordinates.slice();
@@ -95,7 +100,7 @@ const Dashboard = () => {
             });
 
 
-      mapRef.current.on('mouseleave', 'state'+key, () => {
+      mapRef.current.on('mouseleave', data?.name, () => {
         mapRef.current.getCanvas().style.cursor = '';
         popup.remove();
       });
@@ -110,6 +115,33 @@ const Dashboard = () => {
 
 
     }, []);
+
+    useEffect(()=>{
+        if(!mapLoaded) return;
+        if(mapRef && mapRef?.current && state == 'All'){
+            states.forEach((data, key)=>{
+                mapRef?.current?.setLayoutProperty(data?.name,'visibility', visibility);
+                mapRef?.current?.setPaintProperty(data?.name,'fill-opacity', slider/100);
+            })
+    }
+
+    else{
+        states.forEach((data, key)=>{
+            if(data?.name == state){
+            mapRef?.current?.setLayoutProperty(data?.name,'visibility', visibility);
+            mapRef?.current?.setPaintProperty(data?.name,'fill-opacity', slider/100);
+
+        }
+            else{
+            mapRef?.current?.setLayoutProperty(data?.name,'visibility', 'visible');
+
+            mapRef?.current?.setPaintProperty(data?.name,'fill-opacity', 1);
+            }
+            // mapRef?.current?.setPaintProperty(data?.name,'line-color', "#fff");
+        })
+    }
+
+    },[visibility, slider, state])
     return (
         <>
             <div id="map" ref={mapContainerRef}
