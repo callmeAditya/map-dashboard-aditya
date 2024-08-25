@@ -65,7 +65,7 @@ const Dashboard = ({visibility, slider, state}) => {
                 layout: {},
                 paint: {
                     'fill-color': '#0080ff',
-                    'fill-opacity': 0.5
+                    'fill-opacity': 1
                 }
             });
             mapRef.current.addLayer({
@@ -133,7 +133,7 @@ const Dashboard = ({visibility, slider, state}) => {
 
         }
             else{
-            mapRef?.current?.setLayoutProperty(data?.name,'visibility', 'visible');
+            mapRef?.current?.setLayoutProperty(data?.name,'visibility', visibility == 'none'? 'visible':'none');
 
             mapRef?.current?.setPaintProperty(data?.name,'fill-opacity', 1);
             }

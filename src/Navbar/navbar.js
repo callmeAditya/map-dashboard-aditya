@@ -106,7 +106,7 @@ const handleSliderChange=(e)=>{
 
             <Slider
               size="small"
-              defaultValue={50}
+              defaultValue={100}
               value={slider}
               min={10}
               max={100}
