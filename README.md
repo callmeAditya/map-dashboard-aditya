@@ -1,3 +1,7 @@
+# Building a Map Dashboard to Visualize Geographical Data  
+The given project visualizes geographical data based on user input points in the form of latitude and longitude and constructs a polygonal figure of the required area using MapBoxjs library using the Reactjs framework. The given application is a single-page web application styled by MUI theme library for rapid development and visually appealing UI. 
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
