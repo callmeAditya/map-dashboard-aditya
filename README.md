@@ -2,73 +2,22 @@
 The given project visualizes geographical data based on user input points in the form of latitude and longitude and constructs a polygonal figure of the required area using MapBoxjs library using the Reactjs framework. The given application is a single-page web application styled by MUI theme library for rapid development and visually appealing UI. 
 
 
-# Getting Started 
+## Getting Started 
 
-Simply run 'npm start' without quotes to run the application. It runs via live-server.
+Simply run 'npm start' without quotes to run the application. It runs via live-server and opens on localhost
 
-## Available Scripts
+## Project Requirements
+- Before initialization, the project scope is analyzed and items are gathered for efficient development. The points required to construct a polygon are downloaded and the state of the objects is defined at the beginning of the project.
 
-In the project directory, you can run:
+## Project Development
+- The project is developed on React v16 and styled using the latest MUI library for a visually striking appearance. The project is developed using functional-based components and hooks to map changes in states.
+- Slider and Select components are integrated to give a rich user interface.
+- Finally, a drawer component is integrated to hide cluttered data and give a whole picture to application.
 
-### `npm start`
+## Project Testing
+- The project is tested based on the different combinations of select values and the slider is tested for optimum results. Eg: When visibility is hidden, the slider intensity should get disabled.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Project Deployment
+- The project is deployed on GitHub and hosted on https://github.com/callmeAditya/map-dashboard-aditya for efficient review and easier access to the project.
+- The project is directly developed on the main branch.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
