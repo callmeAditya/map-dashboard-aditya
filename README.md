@@ -19,5 +19,5 @@ Simply run 'npm start' without quotes to run the application. It runs via live-s
 
 ## Project Deployment
 - The project is deployed on GitHub and hosted on https://github.com/callmeAditya/map-dashboard-aditya for efficient review and easier access to the project.
-- The project is directly developed on the main branch.
+- The project is directly deployed on the main branch.
 
